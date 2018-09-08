@@ -20,8 +20,8 @@ let HackfuryScheme = contract(hackfurySchemeArtifacts);
 
 // Default Avatar and Voting Machine addresses when using Ganache cli.
 // TODO: Paste here your own instances addresses which can be found in the logs at the end of the migration script.
-const avatarAddress = "0xa2f4efeaef79b02f261a2055cb4ead1e263c1f95";
-const votingMachineAddress = "0x11634ccfb06beb3acd87a53cbd2f1ef2a9d4bd57";
+const avatarAddress = "0xf620fa6d1c3d455e58f6df93917bb3e7132bf767";
+const votingMachineAddress = "0x72c455152b8ce8f358d11206220e06d2551f6b0b";
 
 var hackfuryDAO;
 var hackfuryScheme;
@@ -48,8 +48,6 @@ async function initialize() {
       Controller: true
     }
   });
-
-  console.log("BinaryVoteResult " + BinaryVoteResult.No);
 
   LoggingService.logLevel = LogLevel.all; // Remove or modify to change ArcJS logging
 
@@ -79,8 +77,19 @@ async function go() {
 
   // setup frontend
   $("#userRep").text("Your Reputation: " + userRep + " rep | " + totalRep);
-  $("#registration").css("display", "block")
-  $("#newAuditorButton").click(registerAuditor);
+  if (userRep == 0) {
+    $("#registration").css("display", "block")
+    $("#newAuditorButton").click(registerAuditor);
+  }
+  else {
+    $("#registration").css("display", "none")
+
+    $("#userInfo").css("display", "block")
+    $("#account").css("display", "block")
+    
+    $("#newAuditReport").click(submitReport)
+    $("#auditorTip").click(auditorTip)
+  }
 }
 
 // function getPeepProposalsList() {
@@ -207,14 +216,19 @@ function registerAuditor() {
       // code to setup reloader
       console.log(result);
       $("#registration").css("display", "none")
-      $("#submitaudit").css("display", "block")
+
+      $("#account").css("display", "block")
+      $("#userInfo").css("display", "block")
       $("#newAuditReport").click(submitReport)
+      $("#auditorTip").click(auditorTip)
+
+      console.log(hackfuryScheme.auditors)
     })
     .catch(console.log);
   }
 
 function submitReport() {
-  var customerAddress = $("#customerAddress").val();
+  var customerAddress = web3.toBigNumber($("#customerAddress").val());
   var reportURL = $("#reportURL").val();
   var codeVersion = $("#codeVersion").val();
   var reportHashsum = $("#reportHashsum").val();
@@ -224,15 +238,30 @@ function submitReport() {
   $("#codeVersion").val("");
   $("#reportHashsum").val("");
 
-
+  var amountToStake = web3.toWei(0.001001, "ether");
+  console.log("Trying to send", amountToStake, "wei");
   var newProposalTx = hackfuryScheme.submitReport(customerAddress, reportURL, codeVersion, reportHashsum, auditPassed, {
-      gas: 300000
+      gas: 300000,
+      value: amountToStake
     })
     .then(function(result) {
       console.log(result);
     })
     .catch(console.log);
 }
+
+function auditorTip() {
+  var auditorAddress = web3.toBigNumber($("#auditorAddress").val());
+  var tipAmount = parseInt($("#tipAmount").val());
+  console.log("Trying to tip", tipAmount, "reputation");
+  var newProposalTx = hackfuryScheme.tipAuditorWithReputation(avatarAddress, auditorAddress, tipAmount, {
+      gas: 300000
+    })
+    .then(function(result) {
+      console.log(result);
+    })
+    .catch(console.log);
+  }
 
 // Call our initialize method when the window is loaded
 $(window).on("load", function() {
