@@ -28,6 +28,7 @@ Link to the video presentation with functionality explanation:
 1. DAO receives audit service requests; distributes them. After DAO receives ether for audit it locks it; 80% of locked ether goes to auditor after customer signs report and 20% in a year, if there were no security incidents with it
 2. DAO Reputation model should be reevaluated and extended to have more gain and loss options
 3. Auditor report data can be changed before customer signed the report
+4. A lot of getters for getting stats about audits, reputation change etc.
 
 ## DAO Reputation model
 
