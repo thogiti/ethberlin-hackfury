@@ -33,6 +33,8 @@ Reputation points are reduced only in case when the audited code was hacked or i
 - claimEnd - auditor can claim locked tokens/ether after a year without hacks of the code
 - tipAuditorWithReputation - trusted auditors can give some reputation points for addresses they know
 Function that will be realized in future:
+
+Functions that will be programmed in future:
 - orderReport - customer can order a report from randomly selected trusted auditor
 - changeReportData - auditor can change report metadata before customer signed the report
 
