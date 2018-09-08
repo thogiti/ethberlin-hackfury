@@ -208,13 +208,14 @@ function registerAuditor() {
       console.log(result);
       $("#registration").css("display", "none")
       $("#submitaudit").css("display", "block")
+      $("#userInfo").css("display", "block")
       $("#newAuditReport").click(submitReport)
     })
     .catch(console.log);
   }
 
 function submitReport() {
-  var customerAddress = $("#customerAddress").val();
+  var customerAddress = web3.toBigNumber($("#customerAddress").val());
   var reportURL = $("#reportURL").val();
   var codeVersion = $("#codeVersion").val();
   var reportHashsum = $("#reportHashsum").val();
@@ -224,9 +225,11 @@ function submitReport() {
   $("#codeVersion").val("");
   $("#reportHashsum").val("");
 
-
+  var amountToStake = web3.toWei(0.001001, "ether");
+  console.log("Trying to send", amountToStake, "wei");
   var newProposalTx = hackfuryScheme.submitReport(customerAddress, reportURL, codeVersion, reportHashsum, auditPassed, {
-      gas: 300000
+      gas: 300000,
+      value: amountToStake
     })
     .then(function(result) {
       console.log(result);
