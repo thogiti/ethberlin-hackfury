@@ -92,7 +92,8 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
       reports[_id].customer.transfer(tempEtherLockedByReport);
       emit HackConfirmed(_id, reports[_id].customer, tempEtherLockedByReport);
 			bool auditorReputationOK = ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(reports[_id].auditor) > 42;
-
+			// ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(_avatar).reputationOf(msg.sender) >= 42
+			// this should work
 		if ( auditorReputationOK ) {
 		    ControllerInterface(Avatar(_avatar).owner()).burnReputation(42, reports[_id].auditor, _avatar);
 			} else {
@@ -121,7 +122,8 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
 		require(keccak256(auditors[_auditor]) != keccak256(""));
 		require(reputationGotByTips[_auditor] + _reputation < 6);
 		// require(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(msg.sender) >= 100);
-
+    // require(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(_avatar).reputationOf(msg.sender) >= 100);
+		// this should work
 		reputationGotByTips[_auditor] = reputationGotByTips[_auditor] + _reputation;
 		ControllerInterface(Avatar(_avatar).owner()).mintReputation(_reputation * 10 ** 18, _auditor, _avatar);
 
