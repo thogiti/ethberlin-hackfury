@@ -15,7 +15,7 @@
 
     <div class="jumbotron">
         <h1>Hackfury DAO</h1>
-        <p>Project description</p>
+        <p>Hackfury - Decentralized Audit Organisation</p>
         <a href="https://github.com/eternalflow/ethberlin-hackfury" class="btn btn-info" role="button">See README.md in our github</a>
     </div>
 
@@ -23,30 +23,53 @@
       <p id="daoAddress"></p>
       <p id="userRep"></p>
     </div>
+
     <div class="container">
-      <div id="registration", style="display: none;">
+      <div id="registration" style="display: none;">
         <h3>Register as an auditor first:</h3>
         <pre>Gain reputation making security audits and help customers release versions of their products</pre>
-        <input type="text" class="form-control" id="newAuditorName" placeholder="Please enter your name" style="width: 600px; height: 50px;"></input>
+        <input type="text" class="form-control" id="newAuditorName" placeholder="Please enter your name" style="width: 600px; height: 50px;">
         <br/>
         <button class="btn btn-info" type="submit" id="newAuditorButton" value="Register">Register</button>
       </div>
 
-      <div id="submitaudit", style="display: none;">
-        <h3>Your audits</h3>
-        <div id="auditslist">
-          TODO list audits of an auditor:<br>
-            - customer address<br>
-            - time to claim bounty, if time has come - display "claim staked eth" button<br>
-            - link to report<br>
+      <div id="account" class="row" style="display: none;">
+        <div id="admin" class="row">
+          <div id="tip" class="col-sm">
+            <h3>Tip auditor with reputation point</h3>
+            <input type="text" id="auditorAddress" placeholder="Auditor address" style="width: 400px;"><br>
+            <input type="text" id="tipAmount" placeholder="Amount of reputation (1-5)" style="width: 400px;"><br>
+            <button class="btn btn-info" type="submit" id="auditorTip">TIP AUDITOR</button>
+          </div>
+
+          <div id="blame" class="col-sm">
+            <h3>TODO: Blame audit</h3>
+          </div>
         </div>
-        <h4 style="margin-top: 20px; text-decoration: underline;">New audit</h4>
-        <input type="text" id="customerAddress" placeholder="Customer address" style="display: block; width: 600px; height: 50px;"></input>
-        <input type="text" id="reportURL" placeholder="Report URL" style="display: block; width: 600px; height: 50px;"></input>
-        <input type="text" id="codeVersion" placeholder="Code version" style="display: block; width: 600px; height: 50px;"></input>
-        <input type="text" id="reportHashsum" placeholder="Report Hash" style="display: block; width: 600px; height: 50px;"></input>
-        <br/>
-        <button class="btn btn-info" type="submit" id="newAuditReport">I personally verify that my customer's product is ready to production</button>
+
+        <div id="user" class="row">
+          <div id="auditslist" class="col-sm">
+            <h3>Your audits</h3>
+            TODO list audits of an auditor:<br>
+              - customer address<br>
+              - time to claim bounty, if time has come - display "claim staked eth" button<br>
+              - link to report<br>
+          </div>
+
+          <div id="unsignedauditslist" class="col-sm">
+            <h3>Unsigned audits</h3>
+            TODO: unsigned reports list of a customer:<br>
+              - auditor address<br>
+              - link to report<br>
+              - sign report<br>
+          </div>
+        </div>
+        <h3>New audit</h3>
+          <input type="text" id="customerAddress" placeholder="Customer address"><br>
+          <input type="text" id="reportURL" placeholder="Report URL" style="width: 400px;"><br>
+          <input type="text" id="codeVersion" placeholder="Code version" style="width: 400px;"><br>
+          <input type="text" id="reportHashsum" placeholder="Report Hash" style="width: 400px;"><br>
+          <button class="btn btn-info" type="submit" id="newAuditReport">I personally verify that my customer's product is ready to production</button>
       </div>
     </div>
 

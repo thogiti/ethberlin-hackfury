@@ -40,7 +40,7 @@ module.exports = async function(deployer) {
         "0xd2bdfc2d407b6eeb949a44192bbbf874cd392a11",
       ]; // TODO: Replace with your own address
       foundersTokens = [web3.toWei(1), web3.toWei(2), web3.toWei(3)];
-      foundersRep = [web3.toWei(100), web3.toWei(99), web3.toWei(98)];
+      foundersRep = [web3.toWei(101), web3.toWei(100), web3.toWei(99)];
       break;
   }
 

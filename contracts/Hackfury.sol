@@ -12,14 +12,14 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
     mapping (address => string) public auditors;
     mapping (uint => uint) public etherLockedByReport;
     mapping (uint => address[]) public blamedHack;
-		mapping (address => uint) public reputationGotByTips;
+	mapping (address => uint) public reputationGotByTips;
 
     Report[] public reports;
 
-		struct Parameters {
-				bytes32 voteApproveParams;
-				IntVoteInterface intVote;
-		}
+	struct Parameters {
+			bytes32 voteApproveParams;
+			IntVoteInterface intVote;
+	}
 
     struct Report {
         address auditor;
@@ -39,7 +39,7 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
     event HackBlamed(uint _reportId, address _trustedAuditor);
     event HackConfirmed(uint _reportId, address _customer, uint _etherAmount);
     event AuditValidated(uint _reportId, address _auditor, uint _etherAmount);
-		event AuditorTipped(address _trustedAuditor, address _auditor);
+	event AuditorTipped(address _trustedAuditor, address _auditor);
 
     constructor() public {
 
@@ -71,7 +71,7 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
 
     function confirmReport(uint _id) public {
 
-				require(msg.sender == reports[_id].customer);
+		require(msg.sender == reports[_id].customer);
         reports[_id].approvedByCustomer = true;
         emit ReportConfirmed(_id, msg.sender);
 
@@ -81,21 +81,21 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
 
         require(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(msg.sender) >= 100);
 
-				blamedHack[_id].push(msg.sender);
+		blamedHack[_id].push(msg.sender);
         emit HackBlamed(_id, msg.sender);
 
-			  if (blamedHack[_id].length == 5) {
+		if (blamedHack[_id].length == 5) {
             uint tempEtherLockedByReport = etherLockedByReport[_id];
             etherLockedByReport[_id] = 0;
             reports[_id].customer.transfer(tempEtherLockedByReport);
             emit HackConfirmed(_id, reports[_id].customer, tempEtherLockedByReport);
-						bool auditorReputationOK = ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(reports[_id].auditor) > 42;
+			bool auditorReputationOK = ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(reports[_id].auditor) > 42;
 
-						if ( auditorReputationOK ) {
-								ControllerInterface(Avatar(_avatar).owner()).burnReputation(42, reports[_id].auditor, _avatar);
-						} else {
-								ControllerInterface(Avatar(_avatar).owner()).burnReputation(uint256(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(reports[_id].auditor)), reports[_id].auditor, _avatar);
-						}
+			if ( auditorReputationOK ) {
+					ControllerInterface(Avatar(_avatar).owner()).burnReputation(42, reports[_id].auditor, _avatar);
+			} else {
+					ControllerInterface(Avatar(_avatar).owner()).burnReputation(uint256(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(reports[_id].auditor)), reports[_id].auditor, _avatar);
+			}
 
         }
 
@@ -115,51 +115,51 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
 
     }
 
-		function tipAuditorWithReputation(address _avatar, address _auditor, uint _reputation) public {
+	function tipAuditorWithReputation(address _avatar, address _auditor, uint _reputation) public {
+		require(keccak256(auditors[_auditor]) != keccak256(""));
+		require(reputationGotByTips[_auditor] + _reputation < 6);
+		require(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(msg.sender) >= 100);
 
-				require(reputationGotByTips[_auditor] + _reputation < 6);
-				require(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(msg.sender) >= 100);
+		reputationGotByTips[_auditor] = reputationGotByTips[_auditor] + _reputation;
+		ControllerInterface(Avatar(_avatar).owner()).mintReputation(_reputation, _auditor, _avatar);
 
-				reputationGotByTips[_auditor] = reputationGotByTips[_auditor] + _reputation;
-				ControllerInterface(Avatar(_avatar).owner()).mintReputation(_reputation, _auditor, _avatar);
+	}
 
-		}
+	function setParameters(
+			bytes32 _voteApproveParams,
+			IntVoteInterface _intVote
+	) public returns(bytes32)
+	{
 
-		function setParameters(
-				bytes32 _voteApproveParams,
-				IntVoteInterface _intVote
-		) public returns(bytes32)
-		{
+		bytes32 paramsHash = getParametersHash(
+				_voteApproveParams,
+				_intVote
+		);
+		parameters[paramsHash].voteApproveParams = _voteApproveParams;
+		parameters[paramsHash].intVote = _intVote;
+		return paramsHash;
 
-				bytes32 paramsHash = getParametersHash(
-						_voteApproveParams,
-						_intVote
-				);
-				parameters[paramsHash].voteApproveParams = _voteApproveParams;
-				parameters[paramsHash].intVote = _intVote;
-				return paramsHash;
+	}
 
-		}
+	function getParametersHash(
+			bytes32 _voteApproveParams,
+			IntVoteInterface _intVote
+	) public pure returns(bytes32)
+	{
 
-		function getParametersHash(
-				bytes32 _voteApproveParams,
-				IntVoteInterface _intVote
-		) public pure returns(bytes32)
-		{
+		return (keccak256(abi.encodePacked(_voteApproveParams, _intVote)));
 
-				return (keccak256(abi.encodePacked(_voteApproveParams, _intVote)));
+	}
 
-		}
+	function execute(bytes32 _proposalId, address _avatar, int _param) public returns(bool) {
 
-		function execute(bytes32 _proposalId, address _avatar, int _param) public returns(bool) {
+		require(
+				parameters[getParametersFromController(Avatar(_avatar))].intVote == msg.sender,
+				"Only the voting machine can execute proposal"
+		);
 
-				require(
-						parameters[getParametersFromController(Avatar(_avatar))].intVote == msg.sender,
-						"Only the voting machine can execute proposal"
-				);
-
-				return true;
-				
-		}
+		return true;
+			
+	}
 
 }
