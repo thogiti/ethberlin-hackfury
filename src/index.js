@@ -78,9 +78,9 @@ async function go() {
   totalRep = web3.fromWei(await hackfuryDAO.reputation.getTotalSupply());
 
   // setup frontend
-  $("#newAuditorButton").click(registerAuditor);
   $("#userRep").text("Your Reputation: " + userRep + " rep | " + totalRep);
   $("#registration").css("display", "block")
+  $("#newAuditorButton").click(registerAuditor);
 }
 
 // function getPeepProposalsList() {
@@ -208,9 +208,31 @@ function registerAuditor() {
       console.log(result);
       $("#registration").css("display", "none")
       $("#submitaudit").css("display", "block")
+      $("#newAuditReport").click(submitReport)
     })
     .catch(console.log);
   }
+
+function submitReport() {
+  var customerAddress = $("#customerAddress").val();
+  var reportURL = $("#reportURL").val();
+  var codeVersion = $("#codeVersion").val();
+  var reportHashsum = $("#reportHashsum").val();
+  var auditPassed = false;
+  $("#customerAddress").val("");
+  $("#reportURL").val("");
+  $("#codeVersion").val("");
+  $("#reportHashsum").val("");
+
+
+  var newProposalTx = hackfuryScheme.submitReport(customerAddress, reportURL, codeVersion, reportHashsum, auditPassed, {
+      gas: 300000
+    })
+    .then(function(result) {
+      console.log(result);
+    })
+    .catch(console.log);
+}
 
 // Call our initialize method when the window is loaded
 $(window).on("load", function() {

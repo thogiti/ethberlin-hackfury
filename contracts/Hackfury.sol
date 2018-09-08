@@ -89,7 +89,7 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
     	public payable returns(uint) {
 
         require(keccak256(auditors[msg.sender]) != keccak256(""));
-        require(msg.value > 5 ether);
+        require(msg.value > 1 finney);
         reports.push(Report(msg.sender, _customer, now, _linkToReport, _codeVersionAudited, _reportHashsum, _summary, false));
         emit ReportSubmitted(reports.length, msg.sender, _customer, now, _linkToReport, _codeVersionAudited, _reportHashsum, _summary);
         etherLockedByReport[reports.length] = msg.value;

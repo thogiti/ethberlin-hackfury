@@ -18,14 +18,25 @@
 
     <div id="registration", style="display: none;">
       <h4 style="margin-top: 20px; text-decoration: underline;">Register as an auditor first:</h4>
-      <input type="text" id="newAuditorName" placeholder="Please enter your name" style="width: 600px; height: 50px;"></textarea>
+      <input type="text" id="newAuditorName" placeholder="Please enter your name" style="width: 600px; height: 50px;"></input>
       <br/>
-      <input type="submit" id="newAuditorButton" value="Register"></input>
+      <button type="submit" id="newAuditorButton">Register</button>
     </div>
 
     <div id="submitaudit", style="display: none;">
-      <h4 style="margin-top: 20px; text-decoration: underline;"></h4>
-      
+      <h4 style="margin-top: 20px; text-decoration: underline;">Your audits</h4>
+      <div id="auditslist">
+        TODO list audits of an auditor:<br>
+          - customer address<br>
+          - time to claim bounty, if time has come - display "claim staked eth" button<br>
+          - link to report<br>
+      </div>
+      <h4 style="margin-top: 20px; text-decoration: underline;">New audit</h4>
+      <input type="text" id="customerAddress" placeholder="Customer address" style="display: block; width: 600px; height: 50px;"></input>
+      <input type="text" id="reportURL" placeholder="Report URL" style="display: block; width: 600px; height: 50px;"></input>
+      <input type="text" id="codeVersion" placeholder="Code version" style="display: block; width: 600px; height: 50px;"></input>
+      <input type="text" id="reportHashsum" placeholder="Report Hash" style="display: block; width: 600px; height: 50px;"></input>
+      <button type="submit" id="newAuditReport">I personally verify that my customer's product is ready to production</button>
     </div>
     <!-- <h4 style="margin-top: 20px; text-decoration: underline;">Peep Proposals</h4>
     <ul id="peepProposalList" style="list-style: none;">
