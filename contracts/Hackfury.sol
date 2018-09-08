@@ -39,12 +39,14 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
     event HackBlamed(uint _reportId, address _trustedAuditor);
     event HackConfirmed(uint _reportId, address _customer, uint _etherAmount);
     event AuditValidated(uint _reportId, address _auditor, uint _etherAmount);
-	event AuditorTipped(address _trustedAuditor, address _auditor);
+    event AuditorTipped(address _trustedAuditor, address _auditor);
 
     constructor() public {
 
         auditors[0xc73b23be8CD2a99c2b5A35D190C8684c87fAfa04] = "Ivan";
         auditors[0x2b02EA775ffAF5f45FE97Fb938FFAea8756eF076] = "Paul";
+        auditors[0xd2BDfc2d407b6EEB949a44192bBbf874cD392a11] = "Test";
+
 
     }
 
@@ -118,10 +120,10 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
 	function tipAuditorWithReputation(address _avatar, address _auditor, uint _reputation) public {
 		require(keccak256(auditors[_auditor]) != keccak256(""));
 		require(reputationGotByTips[_auditor] + _reputation < 6);
-		require(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(msg.sender) >= 100);
+		// require(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(msg.sender) >= 100);
 
 		reputationGotByTips[_auditor] = reputationGotByTips[_auditor] + _reputation;
-		ControllerInterface(Avatar(_avatar).owner()).mintReputation(_reputation, _auditor, _avatar);
+		ControllerInterface(Avatar(_avatar).owner()).mintReputation(_reputation * 10 ** 18, _auditor, _avatar);
 
 	}
 
