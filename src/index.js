@@ -20,8 +20,8 @@ let HackfuryScheme = contract(hackfurySchemeArtifacts);
 
 // Default Avatar and Voting Machine addresses when using Ganache cli.
 // TODO: Paste here your own instances addresses which can be found in the logs at the end of the migration script.
-const avatarAddress = "0xa2f4efeaef79b02f261a2055cb4ead1e263c1f95";
-const votingMachineAddress = "0x11634ccfb06beb3acd87a53cbd2f1ef2a9d4bd57";
+const avatarAddress = "0xc244be8e9f7b9df3577cba6ad3870ef902e331dc";
+const votingMachineAddress = "0x84f69366dbd975a0920c3e2f526fd403aabc2c84";
 
 var hackfuryDAO;
 var hackfuryScheme;

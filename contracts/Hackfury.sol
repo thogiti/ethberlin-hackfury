@@ -89,12 +89,12 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
             etherLockedByReport[_id] = 0;
             reports[_id].customer.transfer(tempEtherLockedByReport);
             emit HackConfirmed(_id, reports[_id].customer, tempEtherLockedByReport);
-						uint auditorReputation = ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(reports[_id].auditor);
+						bool auditorReputationOK = ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(reports[_id].auditor) > 42;
 
-						if ( auditorReputation > 42) {
+						if ( auditorReputationOK ) {
 								ControllerInterface(Avatar(_avatar).owner()).burnReputation(42, reports[_id].auditor, _avatar);
 						} else {
-								ControllerInterface(Avatar(_avatar).owner()).burnReputation(auditorReputation, reports[_id].auditor, _avatar);
+								ControllerInterface(Avatar(_avatar).owner()).burnReputation(uint256(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(reports[_id].auditor)), reports[_id].auditor, _avatar);
 						}
 
         }
