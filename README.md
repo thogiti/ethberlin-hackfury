@@ -1,6 +1,6 @@
-# Hackfury - the auditors DAO
+# The Hackfury DAO
 
-Hackfury is DAO for worldwide audits management build with DAOStack. The DAO stores meta information for all audit reports submitted. It also handles reputation for trusted auditors.
+The Hackfury DAO is Decentralized Audit Organization for worldwide audits management build with DAOStack. The DAO stores meta information for all audit reports submitted. It also handles reputation management for auditors.
 There are 3 MAJOR problems that Hackfury DAO solves:
 1. The arguments between auditor and customer when the audited contract is hacked - both of them can verify necessary information stored in blockchain that can help investigations:
     - Code version audited - confirms what code version was audited
@@ -11,7 +11,24 @@ There are 3 MAJOR problems that Hackfury DAO solves:
 3. Auditors don't lose anything if they miss. When auditor submits the report to DAO, it locks some ether (for example 20% of audit price) for year. Auditor can claim this ether in a year, if no bugs/hacks were discovered within the period. Theoretically, This ether can be blocked by customer.
 
 ## MVP for ETHBerlin Hackathon
-TODO:
+
+We developed MVP for Hackfury DAO with next functions:
+1. Register as auditor
+2. Submit audit report metadata to blockchain; lock ether for the period in the audit report.
+3. Sign the report by customer.
+4. Tip the auditor with the reputation
+5. Claim the tokens back from the report lock
+There are also several trusted auditor accounts predefined with non-zero reputation
+
+You can try the dapp here:
+Link to the video presentation with functionality explanation:
+
+## The Hackfury Concepts to be done
+
+1. DAO receives audit service requests; distributes them. After DAO receives ether for audit it locks it; 80% of locked ether goes to auditor after customer signs report and 20% in a year, if there were no security incidents with it
+2. DAO Reputation model should be reevaluated and extended to have more gain and loss options
+3. Auditor report data can be changed before customer signed the report
+4. A lot of getters for getting stats about audits, reputation change etc.
 
 ## DAO Reputation model
 
@@ -19,7 +36,7 @@ There are N trusted auditors predefined in the Hackfury DAO (they will be commun
 
 All new auditors start with 0 reputation. There are 2 ways to get reputation points:
 1. Auditor receive 3 reputation points after they claim tokens - they can claim tokens only if no issues in audited code were found during 1 year
-2. Auditor can be tipped with 1 reputation point by trusted auditor only once
+2. Auditor can be tipped with up to 5 reputation points by trusted auditor
 Auditors with >= 100 points of reputation become trusted auditors with access to some privileged functions.
 
 Reputation points are reduced only in case when the audited code was hacked or issue in it was discovered - after the issue is confirmed by 35% of trusted auditors, auditor who did the report lose 42 reputation points and ether locked within the report is transferred back to customer.
@@ -32,7 +49,8 @@ Reputation points are reduced only in case when the audited code was hacked or i
 - blameHack - trusted auditor can blame the report as failed after the hack of code appears
 - claimEnd - auditor can claim locked tokens/ether after a year without hacks of the code
 - tipAuditorWithReputation - trusted auditors can give some reputation points for addresses they know
-Function that will be realized in future:
+
+Functions that will be programmed in future:
 - orderReport - customer can order a report from randomly selected trusted auditor
 - changeReportData - auditor can change report metadata before customer signed the report
 
