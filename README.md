@@ -20,7 +20,7 @@ We developed MVP for Hackfury DAO with next functions:
 5. Claim the tokens back from the report lock
 There are also several trusted auditor accounts predefined with non-zero reputation
 
-You can try the dapp here:
+You can try the dapp here: http://142.93.132.89:3000/
 Link to the video presentation with functionality explanation:
 
 ## The Hackfury Concepts to be done
