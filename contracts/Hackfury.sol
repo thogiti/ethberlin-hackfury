@@ -41,6 +41,9 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
   event AuditValidated(uint _reportId, address _auditor, uint _etherAmount);
   event AuditorTipped(address _trustedAuditor, address _auditor);
 
+  /**
+  * @dev Constructor register trusted auditors
+  */
   constructor() public {
 
     auditors[0xc73b23be8CD2a99c2b5A35D190C8684c87fAfa04] = "Ivan";
@@ -50,6 +53,9 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
 
   }
 
+  /**
+  * @dev Allows any account to register as auditor
+  */
   function registerAsAuditor(string _name) public {
 
     auditors[msg.sender] = _name;
@@ -57,6 +63,9 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
 
   }
 
+  /**
+  * @dev Allows to submit an audit report by any registered auditor
+  */
   function submitReport(address _customer, string _linkToReport, string _codeVersionAudited, string _reportHashsum, bool _summary)
   	public payable returns(uint) {
 
@@ -71,6 +80,9 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
 
   }
 
+  /**
+  * @dev Allows customer to confirm the final report metadata
+  */
   function confirmReport(uint _id) public {
 
 		require(msg.sender == reports[_id].customer);
@@ -79,6 +91,10 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
 
   }
 
+  /**
+  * @dev Allows trusted auditors to blame hack for report.
+  * If this is 5th blame by trusted auditor - funds are transferred to customer account
+  */
   function blameHack(address _avatar, uint _id) public {
 
     require(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(msg.sender) >= 100);
@@ -92,16 +108,21 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
       reports[_id].customer.transfer(tempEtherLockedByReport);
       emit HackConfirmed(_id, reports[_id].customer, tempEtherLockedByReport);
 			bool auditorReputationOK = ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(_avatar).reputationOf(reports[_id].auditor) >= 42;
-		if ( auditorReputationOK ) {
-		    ControllerInterface(Avatar(_avatar).owner()).burnReputation(42, reports[_id].auditor, _avatar);
-			} else {
-		    ControllerInterface(Avatar(_avatar).owner()).burnReputation(uint256(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(reports[_id].auditor)), reports[_id].auditor, _avatar);
-	    }
 
-      }
+      if ( auditorReputationOK ) {
+  		  ControllerInterface(Avatar(_avatar).owner()).burnReputation(42, reports[_id].auditor, _avatar);
+  		} else {
+  		  ControllerInterface(Avatar(_avatar).owner()).burnReputation(uint256(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(reports[_id].auditor)), reports[_id].auditor, _avatar);
+  	  }
 
     }
 
+  }
+
+  /**
+  * @dev Allows any account to claim the end of the ether lock.
+  * If all conditions are met - auditor receives locked ether
+  */
   function claimEnd(address _avatar, uint _id) public {
 
 	    require(blamedHack[_id].length < 6);
@@ -111,11 +132,14 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
 	    uint tempEtherLockedByReport = etherLockedByReport[_id];
 	    etherLockedByReport[_id] = 0;
 		  ControllerInterface(Avatar(_avatar).owner()).mintReputation(3, reports[_id].auditor, _avatar);
-	    reports[_id].auditor.transfer(tempEtherLockedByReport);
+	    reports[_id].auditor.transfer(tempEtherLockedByReport / 2);
 	    emit AuditValidated(_id, reports[_id].auditor, tempEtherLockedByReport);
 
   }
 
+  /**
+  * @dev Allows trusted auditor to tip auditor with reputation
+  */
 	function tipAuditorWithReputation(address _avatar, address _auditor, uint _reputation) public {
 		require(keccak256(auditors[_auditor]) != keccak256(""));
 		require(reputationGotByTips[_auditor] + _reputation < 6);
@@ -125,6 +149,9 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
 
 	}
 
+  /**
+  * @dev Allows to get the reputation by address
+  */
   function getReputationByAddress(address _address) public view returns(uint) {
     return ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(_avatar).reputationOf(_address);
   }
