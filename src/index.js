@@ -91,6 +91,7 @@ async function go() {
     $("#auditorTip").click(auditorTip)
     $("#customerSign").click(customerSign)
     $("#auditorClaim").click(auditorClaim)
+    $("#displayAccountReputation").click(displayAccountReputation)
   }
 }
 
@@ -289,6 +290,17 @@ function auditorClaim() {
       console.log(result);
     })
     .catch(console.log);
+}
+
+function displayAccountReputation() {
+  var accountAddress = web3.toBigNumber($("#accountAddress").val());
+  var foo = hackfuryScheme.getReputationByAddress(web3.toBigNumber(avatarAddress), accountAddress, {
+    gas: 300000
+  })
+  .then(function(result) {
+    $("#accountReputation").text(result["c"][0] / 10000)
+  })
+  .catch(console.log);
 }
 
 

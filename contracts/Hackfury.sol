@@ -127,7 +127,7 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
   function claimEnd(address _avatar, uint _id) public {
 
 	    require(blamedHack[_id].length < 6);
-	    require(now > reports[_id].date + 1 * 60);
+	    require(now > reports[_id].date + 1 * 10);
 	    // require(etherLockedByReport[_id] != 0);
 
 	    uint tempEtherLockedByReport = etherLockedByReport[_id];
