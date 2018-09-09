@@ -33,43 +33,46 @@
         <button class="btn btn-info" type="submit" id="newAuditorButton" value="Register">Register</button>
       </div>
 
-      <div id="account" class="row" style="display: none;">
-        <div id="admin" class="row">
-          <div id="tip" class="col-sm">
-            <h3>Tip auditor with reputation point</h3>
-            <input type="text" id="auditorAddress" placeholder="Auditor address" style="width: 400px;"><br>
-            <input type="text" id="tipAmount" placeholder="Amount of reputation (1-5)" style="width: 400px;"><br>
-            <button class="btn btn-info" type="submit" id="auditorTip">TIP AUDITOR</button>
-          </div>
-
-          <div id="blame" class="col-sm">
-            <h3>TODO: Blame audit</h3>
-          </div>
-        </div>
-
-        <div id="user" class="row">
-          <div id="auditslist" class="col-sm">
-            <h3>Your audits</h3>
-            TODO list audits of an auditor:<br>
-              - customer address<br>
-              - time to claim bounty, if time has come - display "claim staked eth" button<br>
-              - link to report<br>
-          </div>
-
-          <div id="unsignedauditslist" class="col-sm">
-            <h3>Unsigned audits</h3>
-            TODO: unsigned reports list of a customer:<br>
-              - auditor address<br>
-              - link to report<br>
-              - sign report<br>
-          </div>
-        </div>
-        <h3>New audit</h3>
+      <br>
+        <h3>Submit audit report metadata to blockchain</h3>
           <input type="text" id="customerAddress" placeholder="Customer address" style="width: 400px;"><br>
           <input type="text" id="reportURL" placeholder="Report URL" style="width: 400px;"><br>
           <input type="text" id="codeVersion" placeholder="Code version" style="width: 400px;"><br>
           <input type="text" id="reportHashsum" placeholder="Report Hash" style="width: 400px;"><br>
           <button class="btn btn-info" type="submit" id="newAuditReport">I personally verify that my customer's product is ready to production</button>
+
+      <div id="account" class="row" style="display: none;">
+        <div id="admin" class="row">
+          <div id="tip" class="col-sm">
+            <br>
+            <h3>Tip auditor with reputation point</h3>
+            <pre>Trusted auditors can tip other auditors with repuation.</pre>
+            <pre>For example, Trail of Bits can confirm that some auditor is good - that auditor reputation will raise</pre>
+            <input type="text" id="auditorAddress" placeholder="Auditor address" style="width: 400px;"><br>
+            <input type="text" id="tipAmount" placeholder="Amount of reputation (1-5)" style="width: 400px;"><br>
+            <button class="btn btn-info" type="submit" id="auditorTip">TIP AUDITOR</button>
+          </div>
+          <br>
+
+          <div class="col-sm">
+            <br>
+
+            <h3>Sign report</h3>
+            <pre>Customer signs final report - confirmes that all metadata stored in blockchain is OK</pre>
+            <input type="text" id="reportId" placeholder="Report ID" style="width: 400px;"></br>
+            <button id="customerSign" class="btn btn-info" type="submit">Sign Report</button>
+          </div>
+          
+          <div class="col-sm">
+            <br>
+            <h3>Claim bonus</h3>
+            <pre>Auditor can claim ether locked in the report after a year without any related issues found</pre>
+            <input type="text" id="reportId" placeholder="Report ID" style="width: 400px;"></br>
+            <button id="auditorClaim" class="btn btn-info" type="submit">Get my ETH</button>
+          </div>
+          <br>
+          
+        </div>
       </div>
     </div>
 

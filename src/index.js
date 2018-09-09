@@ -20,8 +20,8 @@ let HackfuryScheme = contract(hackfurySchemeArtifacts);
 
 // Default Avatar and Voting Machine addresses when using Ganache cli.
 // TODO: Paste here your own instances addresses which can be found in the logs at the end of the migration script.
-const avatarAddress = "0xf620fa6d1c3d455e58f6df93917bb3e7132bf767";
-const votingMachineAddress = "0x72c455152b8ce8f358d11206220e06d2551f6b0b";
+const avatarAddress = "0xe82ee22a293dbfb48f2f49565ccee50ea68e7595";
+const votingMachineAddress = "0x247696f4db89b796831f25697b4232bc9c195619";
 
 var hackfuryDAO;
 var hackfuryScheme;
@@ -89,6 +89,8 @@ async function go() {
     
     $("#newAuditReport").click(submitReport)
     $("#auditorTip").click(auditorTip)
+    $("#customerSign").click(customerSign)
+    $("#auditorClaim").click(auditorClaim)
   }
 }
 
@@ -219,8 +221,10 @@ function registerAuditor() {
 
       $("#account").css("display", "block")
       $("#userInfo").css("display", "block")
+
       $("#newAuditReport").click(submitReport)
       $("#auditorTip").click(auditorTip)
+      $("#customerSign").click(customerSign)
 
       console.log(hackfuryScheme.auditors)
     })
@@ -261,7 +265,33 @@ function auditorTip() {
       console.log(result);
     })
     .catch(console.log);
-  }
+}
+
+function customerSign() {
+  var reportId = parseInt($("#reportId").val());
+  console.log("Trying to sign report id = ", reportId);
+  var newProposalTx = hackfuryScheme.confirmReport(reportId, {
+      gas: 300000
+    })
+    .then(function(result) {
+      console.log(result);
+    })
+    .catch(console.log);
+}
+
+function auditorClaim() {
+  var reportId = parseInt($("#reportId").val());
+  console.log("Trying to get ETH from report id = ", reportId);
+  var newProposalTx = hackfuryScheme.claimEnd(web3.toBigNumber(avatarAddress), reportId, {
+      gas: 300000
+    })
+    .then(function(result) {
+      console.log(result);
+    })
+    .catch(console.log);
+}
+
+
 
 // Call our initialize method when the window is loaded
 $(window).on("load", function() {
