@@ -24,60 +24,55 @@
       <p id="userRep"></p>
     </div>
 
-    <div class="container">
-      <div id="registration" class="container">
-        <h3>Register as an auditor:</h3>
-        <pre>Gain reputation making security audits and help customers release versions of their products</pre>
-        <input type="text" class="form-control" id="newAuditorName" placeholder="Please enter your name" style="width: 400px;">
-        <br/>
-        <button class="btn btn-info" type="submit" id="newAuditorButton" value="Register">Register</button>
+    <div id="registration" class="container" style="display: none;">
+      <h3>Register as an auditor:</h3>
+      <pre>Gain reputation making security audits and help customers release versions of their products</pre>
+      <input type="text" class="form-control" id="newAuditorName" placeholder="Please enter your name" style="width: 400px;">
+      <br/>
+      <button class="btn btn-info" type="submit" id="newAuditorButton" value="Register">Register</button>
+    </div>
+
+    <div id="account" class="container" style="display: none;">
+
+      <div id="tip" class="col-sm">
+        <br><br>
+        <h3>Submit audit report metadata to blockchain</h3>
+        <pre>After auditor finishes audit - it submits audit metadata to blockchain:</pre>
+        <pre>Customer address, link to report, code version audited etc.</pre>
+          <input class="form-control" type="text" id="customerAddress" placeholder="Customer address" style="width: 400px;"><br>
+          <input class="form-control" type="text" id="reportURL" placeholder="Report URL" style="width: 400px;"><br>
+          <input class="form-control" type="text" id="codeVersion" placeholder="Code version" style="width: 400px;"><br>
+          <input class="form-control" type="text" id="reportHashsum" placeholder="Report Hash" style="width: 400px;"><br>
+          <button class="btn btn-info" type="submit" id="newAuditReport">Submit Report</button>
+
+        <br><br>
+        <h3>Tip auditor with reputation point</h3>
+        <pre>Trusted auditors can tip other auditors with repuation.</pre>
+        <pre>For example, Trail of Bits can confirm that some auditor is good - that auditor reputation will raise</pre>
+        <input class="form-control" type="text" id="auditorAddress" placeholder="Auditor address" style="width: 400px;"><br>
+        <input class="form-control" type="text" id="tipAmount" placeholder="Amount of reputation (1-5)" style="width: 400px;"><br>
+        <button class="btn btn-info" type="submit" id="auditorTip">Tip Auditor</button>
+      </div>
+      <br>
+
+      <div class="col-sm">
+        <br>
+
+        <h3>Sign report</h3>
+        <pre>Customer signs final report - confirmes that all metadata stored in blockchain is OK</pre>
+        <input type="text" id="reportSignId" placeholder="Report ID" class="form-control" style="width: 400px;"></br>
+        <button id="customerSign" class="btn btn-info" type="submit">Sign Report</button>
       </div>
 
-      <div id="account" class="container">
-
-        <div id="admin" class="row">
-          <div id="tip" class="col-sm">
-
-            <br><br>
-            <h3>Submit audit report metadata to blockchain</h3>
-            <pre>After auditor finishes audit - it submits audit metadata to blockchain:</pre>
-            <pre>Customer address, link to report, code version audited etc.</pre>
-              <input class="form-control" type="text" id="customerAddress" placeholder="Customer address" style="width: 400px;"><br>
-              <input class="form-control" type="text" id="reportURL" placeholder="Report URL" style="width: 400px;"><br>
-              <input class="form-control" type="text" id="codeVersion" placeholder="Code version" style="width: 400px;"><br>
-              <input class="form-control" type="text" id="reportHashsum" placeholder="Report Hash" style="width: 400px;"><br>
-              <button class="btn btn-info" type="submit" id="newAuditReport">Submit Report</button>
-
-            <br><br>
-            <h3>Tip auditor with reputation point</h3>
-            <pre>Trusted auditors can tip other auditors with repuation.</pre>
-            <pre>For example, Trail of Bits can confirm that some auditor is good - that auditor reputation will raise</pre>
-            <input class="form-control" type="text" id="auditorAddress" placeholder="Auditor address" style="width: 400px;"><br>
-            <input class="form-control" type="text" id="tipAmount" placeholder="Amount of reputation (1-5)" style="width: 400px;"><br>
-            <button class="btn btn-info" type="submit" id="auditorTip">Tip Auditor</button>
-          </div>
-          <br>
-
-          <div class="col-sm">
-            <br>
-
-            <h3>Sign report</h3>
-            <pre>Customer signs final report - confirmes that all metadata stored in blockchain is OK</pre>
-            <input type="text" id="reportSignId" placeholder="Report ID" class="form-control" style="width: 400px;"></br>
-            <button id="customerSign" class="btn btn-info" type="submit">Sign Report</button>
-          </div>
-
-          <div class="col-sm">
-            <br>
-            <h3>Claim bonus</h3>
-            <pre>Auditor can claim ether locked in the report after a year without any related issues found</pre>
-            <input type="text" id="reportClaimId" placeholder="Report ID" style="width: 400px;" class="form-control"></br>
-            <button id="auditorClaim" class="btn btn-info" type="submit">Get my ETH</button>
-          </div>
-          <br>
-
-        </div>
+      <div class="col-sm">
+        <br>
+        <h3>Claim bonus</h3>
+        <pre>Auditor can claim ether locked in the report after a year without any related issues found</pre>
+        <input type="text" id="reportClaimId" placeholder="Report ID" style="width: 400px;" class="form-control"></br>
+        <button id="auditorClaim" class="btn btn-info" type="submit">Get my ETH</button>
       </div>
+      <br>
+
     </div>
 
     <script src="js/jquery-3.3.1.min.js"></script>
