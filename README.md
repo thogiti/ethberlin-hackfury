@@ -21,10 +21,11 @@ We developed MVP for Hackfury DAO with next functions:
 There are also several trusted auditor accounts predefined with non-zero reputation
 
 You can try the dapp here: http://142.93.132.89:3000/
-Link to the video presentation with functionality explanation:
+Or you can ask us to show you))
 
 ## The Hackfury Concepts to be done
 
+We consider moving forward with DAOStack extending the functionality for the organization, so DAOStack can help us with:
 1. DAO receives audit service requests; distributes them. After DAO receives ether for audit it locks it; 80% of locked ether goes to auditor after customer signs report and 20% in a year, if there were no security incidents with it
 2. DAO Reputation model should be reevaluated and extended to have more gain and loss options
 3. Auditor report data can be changed before customer signed the report
