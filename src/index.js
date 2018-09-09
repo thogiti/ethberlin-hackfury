@@ -57,8 +57,6 @@ async function initialize() {
 }
 
 async function go() {
-  $("#daoAddress").text("The DAO address is: " + avatarAddress);
-
   hackfuryDAO = await DAO.at(avatarAddress);
 
   const daoSchemes = await hackfuryDAO.getSchemes(); // Returns all the schemes your DAO is registered to
@@ -76,7 +74,6 @@ async function go() {
   totalRep = web3.fromWei(await hackfuryDAO.reputation.getTotalSupply());
 
   // setup frontend
-  $("#userRep").text("Your Reputation: " + userRep + " rep | " + totalRep);
   if (userRep == 0) {
     $("#registration").css("display", "block")
     $("#newAuditorButton").click(registerAuditor);
@@ -84,7 +81,6 @@ async function go() {
   else {
     $("#registration").css("display", "none")
 
-    $("#userInfo").css("display", "block")
     $("#account").css("display", "block")
     
     $("#newAuditReport").click(submitReport)
