@@ -97,7 +97,7 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
   */
   function blameHack(address _avatar, uint _id) public {
 
-    require(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(msg.sender) >= 100);
+    require(getReputationByAddress(_avatar, msg.sender) >= 100);
 
 		blamedHack[_id].push(msg.sender);
     emit HackBlamed(_id, msg.sender);
@@ -107,12 +107,13 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
       etherLockedByReport[_id] = 0;
       reports[_id].customer.transfer(tempEtherLockedByReport);
       emit HackConfirmed(_id, reports[_id].customer, tempEtherLockedByReport);
-			bool auditorReputationOK = ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(_avatar).reputationOf(reports[_id].auditor) >= 42;
+			bool auditorReputationOK = getReputationByAddress(_avatar, reports[_id].auditor) >= 42;
 
       if ( auditorReputationOK ) {
-  		  ControllerInterface(Avatar(_avatar).owner()).burnReputation(42, reports[_id].auditor, _avatar);
+  		  ControllerInterface(Avatar(_avatar).owner()).burnReputation(42 * 10 ** 18, reports[_id].auditor, _avatar);
   		} else {
-  		  ControllerInterface(Avatar(_avatar).owner()).burnReputation(uint256(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(reports[_id].auditor)), reports[_id].auditor, _avatar);
+  		  ControllerInterface(Avatar(_avatar).owner()).burnReputation(
+  		  	getReputationByAddress(_avatar, reports[_id].auditor), reports[_id].auditor, _avatar);
   	  }
 
     }
@@ -131,7 +132,7 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
 
 	    uint tempEtherLockedByReport = etherLockedByReport[_id];
 	    etherLockedByReport[_id] = 0;
-		  ControllerInterface(Avatar(_avatar).owner()).mintReputation(3, reports[_id].auditor, _avatar);
+		  ControllerInterface(Avatar(_avatar).owner()).mintReputation(3 * 10 ** 18, reports[_id].auditor, _avatar);
 	    reports[_id].auditor.transfer(tempEtherLockedByReport / 2);
 	    emit AuditValidated(_id, reports[_id].auditor, tempEtherLockedByReport);
 
@@ -143,7 +144,7 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
 	function tipAuditorWithReputation(address _avatar, address _auditor, uint _reputation) public {
 		require(keccak256(auditors[_auditor]) != keccak256(""));
 		require(reputationGotByTips[_auditor] + _reputation < 6);
-    require(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(_avatar).reputationOf(msg.sender) >= 100);
+    require(getReputationByAddress(_avatar, _auditor) >= 100);
 		reputationGotByTips[_auditor] = reputationGotByTips[_auditor] + _reputation;
 		ControllerInterface(Avatar(_avatar).owner()).mintReputation(_reputation * 10 ** 18, _auditor, _avatar);
 
@@ -152,8 +153,9 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
   /**
   * @dev Allows to get the reputation by address
   */
-  function getReputationByAddress(address _address) public view returns(uint) {
-    return ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(_avatar).reputationOf(_address);
+  function getReputationByAddress(address _avatar, address _address) public view returns(uint) {
+  	Reputation rp = Reputation(ControllerInterface(Avatar(_avatar).owner()).getNativeReputation(_avatar));
+    return rp.reputationOf(_address);
   }
 
 	function setParameters(

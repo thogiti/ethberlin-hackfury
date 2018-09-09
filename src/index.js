@@ -20,8 +20,8 @@ let HackfuryScheme = contract(hackfurySchemeArtifacts);
 
 // Default Avatar and Voting Machine addresses when using Ganache cli.
 // TODO: Paste here your own instances addresses which can be found in the logs at the end of the migration script.
-const avatarAddress = "0xe82ee22a293dbfb48f2f49565ccee50ea68e7595";
-const votingMachineAddress = "0x247696f4db89b796831f25697b4232bc9c195619";
+const avatarAddress = "0x5921f9034cf5f6384f43ade0dd395d54c47f7868";
+const votingMachineAddress = "0x5bdf8cf7dbe566d6eba5cd3e03ac9f3b669b2a0a";
 
 var hackfuryDAO;
 var hackfuryScheme;
@@ -268,7 +268,7 @@ function auditorTip() {
 }
 
 function customerSign() {
-  var reportId = parseInt($("#reportId").val());
+  var reportId = parseInt($("#reportSignId").val());
   console.log("Trying to sign report id = ", reportId);
   var newProposalTx = hackfuryScheme.confirmReport(reportId, {
       gas: 300000
@@ -280,7 +280,7 @@ function customerSign() {
 }
 
 function auditorClaim() {
-  var reportId = parseInt($("#reportId").val());
+  var reportId = parseInt($("#reportClaimId").val());
   console.log("Trying to get ETH from report id = ", reportId);
   var newProposalTx = hackfuryScheme.claimEnd(web3.toBigNumber(avatarAddress), reportId, {
       gas: 300000
