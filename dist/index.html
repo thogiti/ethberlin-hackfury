@@ -33,13 +33,17 @@
         <button class="btn btn-info" type="submit" id="newAuditorButton" value="Register">Register</button>
       </div>
 
-      <br>
+      <div>
+        <br>
         <h3>Submit audit report metadata to blockchain</h3>
+        <pre>After auditor finishes audit - it submits audit metadata to blockchain:</pre>
+        <pre>Customer address, link to report, code version audited etc.</pre>
           <input type="text" id="customerAddress" placeholder="Customer address" style="width: 400px;"><br>
           <input type="text" id="reportURL" placeholder="Report URL" style="width: 400px;"><br>
           <input type="text" id="codeVersion" placeholder="Code version" style="width: 400px;"><br>
           <input type="text" id="reportHashsum" placeholder="Report Hash" style="width: 400px;"><br>
           <button class="btn btn-info" type="submit" id="newAuditReport">I personally verify that my customer's product is ready to production</button>
+      </div>
 
       <div id="account" class="row" style="display: none;">
         <div id="admin" class="row">
@@ -62,7 +66,7 @@
             <input type="text" id="reportId" placeholder="Report ID" style="width: 400px;"></br>
             <button id="customerSign" class="btn btn-info" type="submit">Sign Report</button>
           </div>
-          
+
           <div class="col-sm">
             <br>
             <h3>Claim bonus</h3>
@@ -71,7 +75,7 @@
             <button id="auditorClaim" class="btn btn-info" type="submit">Get my ETH</button>
           </div>
           <br>
-          
+
         </div>
       </div>
     </div>
