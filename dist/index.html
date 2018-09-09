@@ -19,11 +19,6 @@
         <a href="https://github.com/eternalflow/ethberlin-hackfury" class="btn btn-info" role="button">See README.md in our github</a>
     </div>
 
-    <div id="userInfo">
-      <p id="daoAddress"></p>
-      <p id="userRep"></p>
-    </div>
-
     <div id="registration" class="container" style="display: none;">
       <h3>Register as an auditor:</h3>
       <pre>Gain reputation making security audits and help customers release versions of their products</pre>
@@ -69,9 +64,17 @@
         <h3>Claim bonus</h3>
         <pre>Auditor can claim ether locked in the report after a year without any related issues found</pre>
         <input type="text" id="reportClaimId" placeholder="Report ID" style="width: 400px;" class="form-control"></br>
-        <button id="auditorClaim" class="btn btn-info" type="submit">Get my ETH</button>
+        <button id="auditorClaim" class="btn btn-info" type="submit">Get my reputation</button>
       </div>
       <br>
+
+      <div class="col-sm">
+        <br>
+        <h3>Show reputation of an account</h3>
+        <input type="text" id="accountAddress" placeholder="Account address" style="width: 400px; display: inline-block;" class="form-control">
+        <button id="displayAccountReputation" class="btn btn-info" type="submit">Show</button>
+        <span id="accountReputation"></span>
+      </div>
 
     </div>
 
