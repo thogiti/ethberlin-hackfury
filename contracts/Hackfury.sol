@@ -128,12 +128,12 @@ contract Hackfury is UniversalScheme, ExecutableInterface {
 
 	    require(blamedHack[_id].length < 6);
 	    require(now > reports[_id].date + 1 * 60);
-	    require(etherLockedByReport[_id] != 0);
+	    // require(etherLockedByReport[_id] != 0);
 
 	    uint tempEtherLockedByReport = etherLockedByReport[_id];
 	    etherLockedByReport[_id] = 0;
 		  ControllerInterface(Avatar(_avatar).owner()).mintReputation(3 * 10 ** 18, reports[_id].auditor, _avatar);
-	    reports[_id].auditor.transfer(tempEtherLockedByReport / 2);
+	    // reports[_id].auditor.transfer(tempEtherLockedByReport / 2);
 	    emit AuditValidated(_id, reports[_id].auditor, tempEtherLockedByReport);
 
   }
